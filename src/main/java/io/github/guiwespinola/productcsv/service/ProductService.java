@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -18,7 +20,6 @@ public class ProductService {
 
     @Transactional
     public Product save(ProductDTO product) {
-
         return productRepository.save(mapper.map(product, Product.class));
     }
 }
