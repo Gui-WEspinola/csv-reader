@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductDTO {
 
+    @CsvBindByName(column = "CODE")
+    private String code;
+
     @CsvBindByName(column = "NAME")
     private String name;
 
