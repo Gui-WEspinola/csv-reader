@@ -12,9 +12,8 @@ import java.util.List;
 @SpringBootApplication
 public class ProductCsvApplication {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		SpringApplication.run(ProductCsvApplication.class, args);
 
 	}
-
 }
