@@ -11,7 +11,9 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public enum ErrorCode {
 
     EC1001(NOT_FOUND, "Resource not found"),
-    EC1101(BAD_REQUEST, "Invalid file format");
+    EC1101(BAD_REQUEST, "Invalid file format"),
+
+    EC1102(BAD_REQUEST, "File size exceeded.");
 
     private final HttpStatus httpStatus;
 
