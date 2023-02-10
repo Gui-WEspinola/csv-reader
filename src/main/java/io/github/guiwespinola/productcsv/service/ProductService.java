@@ -2,6 +2,7 @@ package io.github.guiwespinola.productcsv.service;
 
 import io.github.guiwespinola.productcsv.entity.Product;
 import io.github.guiwespinola.productcsv.entity.dto.ProductDTO;
+import io.github.guiwespinola.productcsv.exception.ResourceNotFoundException;
 import io.github.guiwespinola.productcsv.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +26,9 @@ public class ProductService {
     }
 
     public ProductDTO getProductByCode(String code) {
-        return mapper.map(productRepository.findByCodeIgnoreCase(code), ProductDTO.class);
+        Product product = productRepository.findByCodeIgnoreCase(code)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not Found"));
+        return mapper.map(product, ProductDTO.class);
     }
 
     public List<ProductDTO> getAllProducts() {
