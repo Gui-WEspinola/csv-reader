@@ -1,5 +1,6 @@
 package io.github.guiwespinola.productcsv.controller;
 
+import io.github.guiwespinola.productcsv.entity.Product;
 import io.github.guiwespinola.productcsv.entity.dto.ProductDTO;
 import io.github.guiwespinola.productcsv.helper.CSVFileReader;
 import io.github.guiwespinola.productcsv.service.ProductService;
@@ -8,9 +9,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -25,7 +24,6 @@ public class ProductController {
 
     private final CSVFileReader csvFileReader;
 
-    @SneakyThrows
     @PostMapping("/upload")
     public ResponseEntity<String> createProduct(MultipartFile file) {
         List<ProductDTO> beans = csvFileReader.readCsvFile(file);
@@ -33,5 +31,15 @@ public class ProductController {
         beans.stream().map(productService::save).toList();
 
         return ResponseEntity.status(HttpStatus.CREATED).body("File successfully uploaded");
+    }
+
+    @GetMapping("/{code}")
+    public ResponseEntity<ProductDTO> getProductByCode(@PathVariable String code) {
+        return ResponseEntity.ok(productService.getProductByCode(code));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 }

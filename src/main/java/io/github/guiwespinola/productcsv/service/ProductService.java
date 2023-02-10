@@ -22,4 +22,15 @@ public class ProductService {
     public Product save(ProductDTO product) {
         return productRepository.save(mapper.map(product, Product.class));
     }
+
+    public ProductDTO getProductByCode(String code) {
+        return mapper.map(productRepository.findByCodeIgnoreCase(code), ProductDTO.class);
+    }
+
+    public List<ProductDTO> getAllProducts() {
+        return productRepository.findAll()
+                .stream()
+                .map(product -> mapper.map(product, ProductDTO.class))
+                .toList();
+    }
 }
